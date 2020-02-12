@@ -24,6 +24,12 @@
 
 console.log("string1"[0]);
 
+//it is also possible to use the addition assignement operator to add to strings like so:
+
+var z = "one string";
+
+z += " two string"; //so that z is now equal to "one string two string"
+
 //s will print to the console, because it is the character at the [0] of the string 
 //in question
  
