@@ -42,8 +42,8 @@
  4 * 2; // equals 8
  -3; //equals negative three when used in this context, and functions as a unary operator
  x = 0;
- x++; //this unary operator increments a value by one, meaning that x now equals 4
- x--; //also unary, this operator de-increments a value by one, which means x equals 3 again
+ x++; //this unary operator increments a value by one, meaning that x now equals 1
+ x--; //also unary, this operator de-increments a value by one, which means x equals 0 again
  16 % 1; //this binary operator returns the remainder of the operands, in this case 1.
  2 ** 4; //this operator functions calculates the exponent value, in this case 16.
  

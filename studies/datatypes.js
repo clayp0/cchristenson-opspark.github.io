@@ -303,3 +303,29 @@ var sameFunc = myFunc; //means that the above function now has a new name, but w
 //run the same, and return the same result when:
 
 sameFunc("googly", "moogly");
+
+/**
+ * 9. BY COPY AND BY REFERENCE EXAMPLES
+ * 
+ * We've already talked about data processed by copy, and data copied by reference.
+ * Now, let's take a look more closely at what is actually happening
+ */
+ 
+ //EXAMPLES//
+ 
+ var str = "A string";
+ 
+ console.log(str);
+ 
+ //We know that the console is going to print a string of "A string", but it's HOW
+ //it arrives at that print out. Since strings are passed by copy, to print my string
+ //the computer just has to copy out what it sees inside str, it doesn't need to 
+ //actually go into the variable and pull out the value 
+ 
+ var arr = ["some", "stuff", "in here"];
+ 
+ console.log(arr);
+ 
+ //in this case, when the console sees that I want it to print the elements within 
+ //a datatype that is accessed by reference, it has to get up and hove itself to the 
+ //function, grab all the things inside it, and trudge its way back before printing.

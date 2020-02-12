@@ -82,6 +82,11 @@
      * to a some very specific criteria. If it doesn't adhere it moves on down the line
      * until it reaches the default statement. The default is the catch all, like the Else
      * statement above. 
+     * 
+     * Switch statements are best if you have an extremely specific, like to the string, 
+     * case that you want to test, and also you have some very specific choices you want 
+     * to test against. Because they don't resolve to a simple true or false, you had better
+     * know exactly what you want to test. Otherwise, an if statement will be easier.
      */
      
      //EXAMPLES//

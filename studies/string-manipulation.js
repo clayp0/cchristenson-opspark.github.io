@@ -38,9 +38,24 @@ var pos = string.indexOf("stored");
 console.log(pos); //prints the number 12
 
 //Here is another example of using a method to manipulate a string 
-var editStr = string.slice(0, 3);
+var editStr = string.slice(0, 4);
 //This .slice method is a function that takes two numbers as parameters and uses them 
 //to know where to start cutting indexes from the string, and where to stop. So then, 
 console.log(editStr); //will print the value assigned to the editStr variable which is now
-// "inside string"
+// "This"
+
+var y = string.toUpperCase();
+//This method will take each index in the string, and make it a capital letter  So...
+console.log(y); //will bring back a string of "THIS IS ALL STORED INSIDE STRING"
+
+var replace = string.replace("stored", "shmored"); 
+//this is a method that creates a new string where the first parameter is the word to be replaced
+//and the second word is the string to be the replacement. So...
+console.log(replace); //will print "This is all shmored inside string"
+
+console.log(string.concat("." + " " + replace));//this is an instance of the .concat() method of strings that will in this case combine the string string with the string replace printing "This is all stored inside string. This is all shmored inside string" 
+var x = y.toLowerCase();//this method of strings will take each index and force it to lowercase. So...
+console.log(x);//a string of "this is all stored inside string" will print to the consolce
+
+
  
