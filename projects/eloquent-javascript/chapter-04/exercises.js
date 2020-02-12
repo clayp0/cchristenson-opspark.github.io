@@ -1,10 +1,35 @@
 ////////////////////////////////////////////////////////////////////////////////
 // range ///////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
-function range() {
-
-}
+//I: two numbers
+//0: an Array
+//C/E: 
+function range(start, end, x = 1) {
+  // I need to make a container to push my values in
+    let arr = [];
+    // if (step == undefined){
+    //   x = 1
+    // } else {
+    //   x = step
+    // }
+    //i need a conditional to figure out if the first number is bigger than the second one
+    if (start < end) {
+    //since it's smaller, it needs to push all the numbers in between into my array
+         for(let i = start; i <= end; i+=x) {
+        arr.push(i);
+    //then it should bring back the new array filled with the all the numbers
+    } 
+    //i need to reverse the process, in case the first number is bigger
+    } else {
+    //this loop is going to count down integers instead of up
+        for (let i = start; i >= end; i-=x){
+    //then it'll push all those descending numbers to the array
+            arr.push(i);
+    //and bring that sucker back        
+        } 
+    }
+    return arr;
+}  
 
 ////////////////////////////////////////////////////////////////////////////////
 // sum /////////////////////////////////////////////////////////////////////////
