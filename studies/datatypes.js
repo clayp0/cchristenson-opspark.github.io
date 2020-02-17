@@ -315,17 +315,28 @@ sameFunc("googly", "moogly");
  
  var str = "A string";
  
- console.log(str);
+ //in this case, the computer passes the value of each character in the string by 
+ //copying it. It is passed by copy because the computer already knows what to do with
+ //each of those letters.
  
- //We know that the console is going to print a string of "A string", but it's HOW
- //it arrives at that print out. Since strings are passed by copy, to print my string
- //the computer just has to copy out what it sees inside str, it doesn't need to 
- //actually go into the variable and pull out the value 
+ var str2 = str;
  
- var arr = ["some", "stuff", "in here"];
+ //now I've assigned the value of my new variable str2 equal to the value of my first variable 
+ //str. In order to fill the variable with the value I've designated, the computer 
+ //copies each of the values into the new variable.
  
- console.log(arr);
+ var arr = [1, 2, 3, 4, 5, 6, 7, 8];
  
- //in this case, when the console sees that I want it to print the elements within 
- //a datatype that is accessed by reference, it has to get up and hove itself to the 
- //function, grab all the things inside it, and trudge its way back before printing.
+ 
+ var newArr = arr;
+ 
+ //in this case, I've made a complex data type that could be any size. When I rename
+ //the data something else, or whenever I want to do anything with it, the computer
+ //goes back to the time the data was written the first time, wherever that is. 
+ //It is very important to note that when I create newArr, the computer does not 
+ //recreate the data from arr. Instead, newArr now points to the data held by arr.
+ //same if I:
+ 
+ console.log(newArr); //the console goes back and looks at where the code was written
+ //when it was declared arr. It needs to look at the place where the literal data
+ //exists in order to access and print it.
