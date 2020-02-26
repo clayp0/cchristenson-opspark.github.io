@@ -16,6 +16,7 @@ var _ = {};
 *   _.identity(5) === 5
 *   _.identity({a: "b"}) === {a: "b"}
 */
+
 _.identity = function(value){
     return value;
 };
@@ -38,13 +39,19 @@ _.identity = function(value){
 * _.typeOf("javascript") -> "string"
 * _.typeOf([1,2,3]) -> "array"
 */
+
+//I: a value
+//O: a string with the type of that value 
+//C/E: arrays, undefined, and null should all print their type
 _.typeOf = function (value) {
+    //let's test for our constrained cases first
     if (typeof value === undefined){
         return "undefined";
     } else if (value === null) {
         return "null";
     } else if (Array.isArray(value)){
         return "array";
+    //then we can just bring back a string of the value passed in using typeof
     } else {
         return typeof value;
     }
@@ -66,13 +73,19 @@ _.typeOf = function (value) {
 *   _.first(["a", "b", "c"], 1) -> "a"
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
+//I: an array and a number
+//O: a new array
 _.first = function (array, num){
+    //let's make a container to hold our new values
     let newArray = [];
+    //then let's make sure we're working with the right type of thing
     if (Array.isArray(array) === false || num < 0){
         return [];
+    //then let's make sure we know what to do if a num argument isn't passed in
     } else if (typeof num !== "number" || num === null){
          return array[0];
     } else {
+    //then we can return a slice of our original array from the first index up to the given number
       newArray = array.slice(0, num);
     }
 return newArray;
@@ -94,12 +107,18 @@ return newArray;
 *   _.last(["a", "b", "c"], 1) -> "c"
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
+//I: an array and a number
+//O: an updated array
 _.last = function (array, num) {
+    //like last time, lets make sure we're working with the right type of data
     if (Array.isArray(array) === false || num < 0){
         return [];
+    //if a nmber isn't given, return the last element in the array
     } else if (typeof num !== "number" || num === null){
          return array[array.length - 1];
     } else {
+    //we can then return a slice of our array starting at the end of our array 
+    //and counting back to our number
         return array.slice(-num, array.length)
     }
 }
@@ -118,11 +137,16 @@ _.last = function (array, num) {
 *   _.indexOf(["a","b","c"], "c") -> 2
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
+//I:an array, and a value
+//O: the index of the value
 _.indexOf = function(array, value) {
+    //loop through the array
     for (let i = 0; i <= array.length - 1; i++) {
+    //if the index being checked matched the value, return the index
         if (array[i] === value) {
             return i;
         }
+    //if no match is found, return -1
     } return -1;
 }
 /** _.contains
@@ -139,7 +163,11 @@ _.indexOf = function(array, value) {
 * Examples:
 *   _.contains([1,"two", 3.14], "two") -> true
 */
+//I: an array, and a value 
+//O: a boolean
+//C: use a ternary operator to check 
 _.contains = function(array, value) {
+    //return the result of a check whether the array includes the value
     return (array.includes(value) ? true : false);
 }
 /** _.each
@@ -157,12 +185,19 @@ _.contains = function(array, value) {
 *   _.each(["a","b","c"], function(e,i,a){ console.log(e)});
 *      -> should log "a" "b" "c" to the console
 */
+//I: a collection, and a test function
+//O: the result of the test 
+//C: only run the test on collections
 _.each = function(collection, test) {
+    //first, test if the collecction is an array
     if (Array.isArray(collection)) {
+    //if so, loop through and run the test on each index
        for (let i = 0; i <= collection.length - 1; i++) {
            test(collection[i], i, collection);
        } 
+    //if it isn't an array, test if its an object
     } else if (typeof collection === "object") {
+    //if so, loop through and run the test on each object key in the collection
         for (let key in collection) {
             test(collection[key], key, collection);
         }       
@@ -177,22 +212,20 @@ _.each = function(collection, test) {
 * Examples:
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 */
-
+//I: an array
+//I: an array without duplicates
 _.unique = function (array){
-    debugger
     let arr = [];
     //loop through my argument
     for (let i = 0; i <= array.length-1; i++) {
     //check if arr includes the current i from the argument, if it doesn't, push the index into arr
         if (arr.indexOf(array[i]) === -1) {
+    //
           arr.push(array[i]); 
         }
     }
     //return the array
     return arr;
-   
-    
-    //
 
 }
 /** _.filter
@@ -210,6 +243,22 @@ _.unique = function (array){
 * Extra Credit:
 *   use _.each in your implementation
 */
+//I: 
+
+
+_.filter = function(array, test) {
+    var resultArray = [];
+    _.each(array, function(element, index, array) {
+        if (test(element, index, array)) {
+            resultArray.push(element);
+        }
+    });
+    return resultArray;
+};
+
+
+
+
 /** _.reject
 * Arguments:
 *   1) An array
@@ -222,6 +271,20 @@ _.unique = function (array){
 * Examples:
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
+
+_.reject = function(array, test) {
+    var resultArray = [];
+    _.each(array, function(element, index, array) {
+        if (test(element, index, array) === false) {
+            resultArray.push(element);
+        }
+    });
+    return resultArray;
+};
+
+
+
+
 /** _.partition
 * Arguments:
 *   1) An array
@@ -240,6 +303,23 @@ _.unique = function (array){
 *   }); -> [[2,4],[1,3,5]]
 }
 */
+_.partition = function(array, tOrF) {
+    let all = [];
+    let truthies = [];
+    let falsies = [];
+    for(let i = 0; i <= array.length - 1; i++) {
+        if (tOrF(array[i], array[i]["key"], array)) {
+            truthies.push(array[i]);
+        } else {
+            falsies.push(array[i]);
+        }
+    }
+    all.push(truthies, falsies);
+    return all;
+}
+
+
+
 /** _.map
 * Arguments:
 *   1) A collection
@@ -255,6 +335,24 @@ _.unique = function (array){
 * Examples:
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
+
+_.map = function(collection, test){
+    let result = [];
+    if(Array.isArray(collection)){
+        for (let i = 0; i <= collection.length - 1; i++){
+            result.push(test(collection[i], i, collection));
+        }
+    } else {
+        for (let key in collection){
+            result.push(test(collection[key], key, collection));
+        }
+    }
+    return result;
+};
+
+
+
+
 /** _.pluck
 * Arguments:
 *   1) An array of objects
@@ -265,6 +363,17 @@ _.unique = function (array){
 * Examples:
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
+
+_.pluck = function(array, key){
+    
+   return _.map(array, function(element, index, collection){
+       //need to acces each element's key 
+       return element[key];
+    });
+    
+};
+
+
 /** _.every
 * Arguments:
 *   1) A collection
@@ -285,6 +394,36 @@ _.unique = function (array){
 *   _.every([2,4,6], function(e){return e % 2 === 0}) -> true
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
+
+_.every = function(collection, test) {
+     console.log(collection);
+     if (Array.isArray(collection)) {
+       for (let i = 0; i <= collection.length - 1; i++) {
+           if (test === undefined && collection[i]) {
+               return true;
+           } else if (test === undefined && !collection[i]) {
+               return false;
+           } else if(!test(collection[i], i, collection)) {
+               return false;
+           }
+       } return true;
+    } else if (typeof collection === "object") {
+        for (let key in collection) {
+            if(test === undefined && collection[key]) {
+                return true;    
+            } else if (test === undefined && !collection[key]) {
+                return false;    
+            } else if (!test(collection[key], key, collection)) {
+                return false;
+            }
+        }
+        return true;
+   }   
+}
+
+
+
+
 /** _.some
 * Arguments:
 *   1) A collection
@@ -305,6 +444,35 @@ _.unique = function (array){
 *   _.some([1,3,5], function(e){return e % 2 === 0}) -> false
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
+
+_.some = function(collection, test) {
+     if (Array.isArray(collection)) {
+       for (let i = 0; i <= collection.length - 1; i++) {
+           if (test === undefined && collection[i]) {
+               return true;
+           } else if (test === undefined && !collection[i]) {
+               return false;
+           } else if(test(collection[i], i, collection)) {
+               return true;
+           }
+       } return false;
+    } else if (typeof collection === "object") {
+        for (let key in collection) {
+            if(test === undefined && collection[key]) {
+                return true;    
+            } else if (test === undefined && !collection[key]) {
+                return false;    
+            } else if (test(collection[key], key, collection)) {
+                return true;
+            }
+        }
+        return false;
+   } 
+}
+
+
+
+
 /** _.reduce
 * Arguments:
 *   1) An array
@@ -323,6 +491,32 @@ _.unique = function (array){
 * Examples:
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
 */
+
+_.reduce = function(array, test, seed) {
+    // assign previousResult to the value of the seed
+    let previousResult = seed;
+    // if the seed is undefined
+    if (seed === undefined) {
+        // set previousResult equal to the first element in the array
+        previousResult = array[0];
+    // using a for loop, loop through the array starting at the 1st index 
+    for(let i = 1; i <= array.length - 1; i++) {
+        // for each iteration set the previousResult variable equal to the result of the test
+        previousResult = test(previousResult, array[i], i);
+    } 
+    // otherwise, use a for loop to loop over the array 
+    } else {
+      for(let i = 0; i <= array.length - 1; i++) {
+        // for each iteration, set the previousReult equal to the result of the test 
+        previousResult = test(previousResult, array[i], i);
+        }   
+    }
+    // return previousResult
+    return previousResult;
+}
+
+
+
 /** _.extend
 * Arguments:
 *   1) An Object
@@ -337,6 +531,17 @@ _.unique = function (array){
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
+
+_.extend = function(object1, ...arrOfObjects){
+   for(let i = 0; i <= arrOfObjects.length - 1; i++) {
+       for(let key in arrOfObjects[i]) {
+           object1[key] = arrOfObjects[i][key];
+       }
+   } 
+   return object1;
+}
+
+
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
