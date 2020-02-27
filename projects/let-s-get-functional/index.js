@@ -3,7 +3,7 @@
 'use strict';
 
 var customers = require('./data/customers.json');
-var _ = require(lodown-cchristenson-opspark);
+var _ = require("lodown-cchristenson-opspark");
 
 /**
  * 1. Import your lodown module using the require() method,
@@ -28,6 +28,9 @@ var maleCount = function(array) {
 };
 
 var femaleCount = function(array){
+    return _.filter(array, function(customerObj){
+        return customerObj.gender === 'female';
+    }).length;
     
 };
 

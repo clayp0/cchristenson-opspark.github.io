@@ -16,8 +16,8 @@ var _ = {};
 *   _.identity(5) === 5
 *   _.identity({a: "b"}) === {a: "b"}
 */
-
 _.identity = function(value){
+    
     return value;
 };
 /** _.typeOf
@@ -189,7 +189,7 @@ _.contains = function(array, value) {
 //O: the result of the test 
 //C: only run the test on collections
 _.each = function(collection, test) {
-    //first, test if the collecction is an array
+    //first, test if the collection is an array
     if (Array.isArray(collection)) {
     //if so, loop through and run the test on each index
        for (let i = 0; i <= collection.length - 1; i++) {
@@ -243,16 +243,22 @@ _.unique = function (array){
 * Extra Credit:
 *   use _.each in your implementation
 */
-//I: 
+//I: An array, and a function
+//O:a new array
 
 
 _.filter = function(array, test) {
+    //make container to hold filtered values
     var resultArray = [];
+    //then pass the array to a function that tests every element in the function 
+    //according to the constraints of our internal function expression 
     _.each(array, function(element, index, array) {
+        //if the test returns true, push the element into my updated array
         if (test(element, index, array)) {
             resultArray.push(element);
         }
     });
+    //when the loop is done, return the new array
     return resultArray;
 };
 
@@ -271,14 +277,19 @@ _.filter = function(array, test) {
 * Examples:
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
-
+//I: array, and a function
+//O: an new array
 _.reject = function(array, test) {
+    //make a container for my values
     var resultArray = [];
+    //pass the array to a test that will measure each element in my array
     _.each(array, function(element, index, array) {
+    //if the element returns false, add it to my resultArray
         if (test(element, index, array) === false) {
             resultArray.push(element);
         }
     });
+    //return that array
     return resultArray;
 };
 
@@ -303,10 +314,15 @@ _.reject = function(array, test) {
 *   }); -> [[2,4],[1,3,5]]
 }
 */
+//I: array and a function 
+//O: an array made of two sub arrays
+
 _.partition = function(array, tOrF) {
+    //make containers for respective value groups
     let all = [];
     let truthies = [];
     let falsies = [];
+    //loop through array running the test at each index with respective routing
     for(let i = 0; i <= array.length - 1; i++) {
         if (tOrF(array[i], array[i]["key"], array)) {
             truthies.push(array[i]);
@@ -314,7 +330,9 @@ _.partition = function(array, tOrF) {
             falsies.push(array[i]);
         }
     }
+    //push the two sub arrays into my final array
     all.push(truthies, falsies);
+    //return final array
     return all;
 }
 
@@ -336,17 +354,26 @@ _.partition = function(array, tOrF) {
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
 
+//I: collection, either arrays or objects, and a function
+//O: an array of updated values 
 _.map = function(collection, test){
+    //make a container to hold updated values
     let result = [];
+    //check if the collection is an array
     if(Array.isArray(collection)){
+    //if so, loop through and run the function on each element in the array
+    //pushing the updated result into my array
         for (let i = 0; i <= collection.length - 1; i++){
             result.push(test(collection[i], i, collection));
         }
     } else {
+    //if not an array, loop through the object and run the function on each element
+    //push the results into the result array
         for (let key in collection){
             result.push(test(collection[key], key, collection));
         }
     }
+    //return result array
     return result;
 };
 
@@ -365,9 +392,10 @@ _.map = function(collection, test){
 */
 
 _.pluck = function(array, key){
-    
+    //return a function that takes the array and does something to each element in the array
    return _.map(array, function(element, index, collection){
-       //need to acces each element's key 
+       //make the function being executed on each element return the value associated
+       //with the key argument passed in
        return element[key];
     });
     
@@ -394,23 +422,28 @@ _.pluck = function(array, key){
 *   _.every([2,4,6], function(e){return e % 2 === 0}) -> true
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
-
+//I: collection, array or object
+//O: boolean
 _.every = function(collection, test) {
-     console.log(collection);
+    //determine the type of our collection
      if (Array.isArray(collection)) {
+         //loop through the array
        for (let i = 0; i <= collection.length - 1; i++) {
+          //if the function isn't given but the collection contains all truthy
+          //values, return true
            if (test === undefined && collection[i]) {
-               return true;
+                //if the test isn't given, but there are falsy elements, return false
            } else if (test === undefined && !collection[i]) {
                return false;
+               //if the test is given, and a given index fails, return false 
            } else if(!test(collection[i], i, collection)) {
                return false;
            }
        } return true;
+       //now, run the same steps for an object
     } else if (typeof collection === "object") {
         for (let key in collection) {
             if(test === undefined && collection[key]) {
-                return true;    
             } else if (test === undefined && !collection[key]) {
                 return false;    
             } else if (!test(collection[key], key, collection)) {
@@ -444,18 +477,26 @@ _.every = function(collection, test) {
 *   _.some([1,3,5], function(e){return e % 2 === 0}) -> false
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
-
+//I: collection, either array or object
+//O: boolean
 _.some = function(collection, test) {
+    //determine the type of the collection
      if (Array.isArray(collection)) {
+    //loop through collection
        for (let i = 0; i <= collection.length - 1; i++) {
+        //if the function isn't given and there is a single truthy element, return true
            if (test === undefined && collection[i]) {
                return true;
+            //if the test isn't given, and the test comes back false once, return false
            } else if (test === undefined && !collection[i]) {
                return false;
+            //if the test is given, and finds a truthy value, return true
            } else if(test(collection[i], i, collection)) {
                return true;
            }
+           //if the loop finishes without a truthy value, return false
        } return false;
+       //now, run the same steps in the event that the collection is an object
     } else if (typeof collection === "object") {
         for (let key in collection) {
             if(test === undefined && collection[key]) {
@@ -531,13 +572,18 @@ _.reduce = function(array, test, seed) {
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
-
+//I: a lead object, and as many more objects as needed
+//O: the lead object filled with the data from the rest of the objects
 _.extend = function(object1, ...arrOfObjects){
+   // since my rest parameter forms an array of my argument objects, I can loop through 
    for(let i = 0; i <= arrOfObjects.length - 1; i++) {
+       //then loop through each property in the object represented by that array index
        for(let key in arrOfObjects[i]) {
+           //assign the property to my lead object 
            object1[key] = arrOfObjects[i][key];
        }
    } 
+   //return lead object
    return object1;
 }
 
